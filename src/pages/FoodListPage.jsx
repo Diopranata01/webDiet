@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import meatSvg from "../assets/svg/meatSvg.svg";
 import fishSvg from "../assets/svg/fishSvg.svg";
+import waterSvg from "../assets/svg/waterSvg.svg";
+import wheatSvg from "../assets/svg/wheatSvg.svg";
+import plantSvg from "../assets/svg/plantSvg.svg";
 
 const FoodListPage = () => {
   const { filteredData, loading } = useSelector((state) => state.foodMaterial);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const { slug } = useParams();
+
+  console.log(slug);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -36,18 +43,41 @@ const FoodListPage = () => {
                 key={index}
                 className="flex items-start bg-white rounded-lg shadow-md p-4"
               >
-                <img
-                  src={
-                    item.makanan.includes("Daging") ||
-                    item.makanan.includes("Telur")
-                      ? meatSvg
-                      : fishSvg
-                  }
+                {slug === "dariHewan" ? (
+                  <img
+                    src={
+                      item.makanan.includes("Daging") ||
+                      item.makanan.includes("Telur")
+                        ? meatSvg
+                        : fishSvg
+                    }
+                    alt="svg"
+                    width="45"
+                    height="45"
+                    className="bg-old-gold rounded-[10px] mr-4 p-2"
+                  />
+                ) : slug === 'pokok' && (
+                  (
+                    <img
+                      src={
+                        item.makanan.includes("Air")? waterSvg : wheatSvg
+                      }
+                      alt="svg"
+                      width="45"
+                      height="45"
+                      className="bg-old-gold rounded-[10px] mr-4 p-2"
+                    />
+                  )
+                )}
+                {slug === "dariTumbuhan" && (
+                  <img
+                  src={plantSvg}
                   alt="svg"
                   width="45"
                   height="45"
                   className="bg-old-gold rounded-[10px] mr-4 p-2"
                 />
+                )}
                 <div className="flex flex-col items-start text-left">
                   <h2 className="text-lg font-bold">{item.makanan}</h2>
                   <p className="text-gray-600">
@@ -69,7 +99,9 @@ const FoodListPage = () => {
               <li
                 key={number}
                 className={`px-3 py-[6px] pt-[4px] rounded-md border border-gray-400 ${
-                  currentPage === number ? "bg-old-gold text-white" : "bg-gray-200"
+                  currentPage === number
+                    ? "bg-old-gold text-white"
+                    : "bg-gray-200"
                 }`}
                 onClick={() => handlePageChange(number)}
               >

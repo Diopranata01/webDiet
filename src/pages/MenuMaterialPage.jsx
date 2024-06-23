@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchFoodMaterials,
+  fetchMenuMaterials,
   setFilteredData,
-} from "../redux/slices/foodMaterialSlice";
+} from "../redux/slices/menuSlice";
 import { useParams, Link, Outlet } from "react-router-dom";
 
-const FoodMaterialPage = () => {
+const MenuMaterialPage = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.foodMaterial);
@@ -16,7 +16,7 @@ const FoodMaterialPage = () => {
   useEffect(() => {
     console.log(slug);
     if (slug !== undefined){
-      dispatch(fetchFoodMaterials(slug));
+      dispatch(fetchMenuMaterials(slug));
     }
   }, [slug, dispatch]);
 
@@ -72,8 +72,8 @@ const FoodMaterialPage = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <Link to="/food-material" className="ml-1 text-lg font-medium text-black hover:text-gray-900 dark:text-old-gold">
-                    Food Materials
+                  <Link to="/healthy-recipes" className="ml-1 text-lg font-medium text-black hover:text-gray-900 dark:text-old-gold">
+                    Healty Recipies Menu
                   </Link>
                 </div>
               </li>
@@ -115,4 +115,4 @@ const FoodMaterialPage = () => {
   );
 };
 
-export default FoodMaterialPage;
+export default MenuMaterialPage;

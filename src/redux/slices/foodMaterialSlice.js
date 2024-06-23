@@ -7,7 +7,7 @@ import { queries } from "../../services/querryRDF";
 export const fetchFoodMaterials = createAsyncThunk(
   "foodMaterial/fetchFoodMaterials",
   async (slug) => {
-    const response = await fetch("/danny.rdf");
+    const response = await fetch("/makanandiet2aplikasi.rdf");
     const rdfText = await response.text();
     const store = graph();
     const mimeType = "application/rdf+xml";
@@ -16,11 +16,11 @@ export const fetchFoodMaterials = createAsyncThunk(
     parse(rdfText, store, baseURI, mimeType);
 
     const query =
-      slug === "from-animal"
+      slug === "dariHewan"
         ? queries.bahanDarihewan
-        : slug === "from-plant"
+        : slug === "dariTumbuhan"
         ? queries.bahanDaritumbuhan
-        : "";
+        : queries.bahanPokok;
 
     const sparqlQuery = SPARQLToQuery(query, false, store);
     const results = [];
@@ -47,49 +47,6 @@ export const fetchFoodMaterials = createAsyncThunk(
     return fetchedResults; // Return the results to the reducer
   }
 );
-
-// export const fetchGeneralFoodMaterials = createAsyncThunk(
-//   "foodMaterial/fetchFoodMaterials",
-//   async (slug) => {
-//     const response = await fetch("/danny.rdf");
-//     const rdfText = await response.text();
-//     const store = graph();
-//     const mimeType = "application/rdf+xml";
-//     const baseURI = import.meta.env.VITE_APP_BASE_URL;
-
-//     parse(rdfText, store, baseURI, mimeType);
-
-//     const query =
-//       slug === "from-animal"
-//         ? queries.bahanDarihewan
-//         : slug === "from-plant"
-//         ? queries.bahanDaritumbuhan
-//         : "";
-
-//     const sparqlQuery = SPARQLToQuery(query, false, store);
-//     const results = [];
-
-//     // Use a Promise to handle the asynchronous query
-//     const queryPromise = new Promise((resolve, reject) => {
-//       store.query(sparqlQuery, (result) => {
-//         let data = result["?makanan"].value;
-//         let newData = data.replace(
-//           "http://www.semanticweb.org/danny/2024/5/makanan_diet#",
-//           ""
-//         );
-//         newData = camelCaseToLowerCase(newData);
-//         newData = capitalizeEachWord(newData);
-//         results.push({ makanan: newData });
-//         resolve(results); // Resolve the promise with the results
-//       });
-//     });
-
-//     // Await the query promise to get the results
-//     const fetchedResults = await queryPromise;
-//     // console.log(fetchedResults); // Log the results
-//     return fetchedResults; // Return the results to the reducer
-//   }
-// );
 
 const foodMaterialSlice = createSlice({
   name: "foodMaterial",

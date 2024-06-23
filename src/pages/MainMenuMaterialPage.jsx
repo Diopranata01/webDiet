@@ -9,14 +9,15 @@ import {
   capitalizeEachWord,
 } from "../services/TextConvert";
 
-const MainMaterialPage = () => {
+const MainMenuMaterialPage = () => {
   const dispatch = useDispatch();
   const [dataBaru, setData] = useState([]);
   const { data, generalFoodData, filteredData, loading } = useSelector(
-    (state) => state.foodMaterial
+    (state) => state.menuMaterial
   );
 
   useEffect(() => {
+    console.log(generalFoodData);
     const dataCamelCase = generalFoodData.map((item) => {
       return camelCaseToLowerCase(item);
     });
@@ -30,7 +31,7 @@ const MainMaterialPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold pb-4">Choose Your Food Materials</h1>
+      <h1 className="text-3xl font-bold pb-4">Choose Your Main Course </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 pt-10">
         {dataBaru.map((item, index) => (
           <Link to={`/food-material/${generalFoodData[index]}`} key={index} className="bg-white rounded-lg shadow-md p-4">
@@ -74,4 +75,4 @@ const MainMaterialPage = () => {
   );
 };
 
-export default MainMaterialPage;
+export default MainMenuMaterialPage;
