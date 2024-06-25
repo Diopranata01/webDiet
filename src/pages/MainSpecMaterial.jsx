@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import mainCourse from "../assets/mainCourse.webp";
-import drinkImage from "../assets/drink_image.webp";
 import snacksImage from "../assets/snacks_image.webp";
-import { useParams, Link, Outlet } from "react-router-dom";
+import calsImage from "../assets/calsImage.webp";
+import carbsImage from "../assets/carbsImage.webp";
+import fatImage from "../assets/fatImage.webp";
+import proteinImage from "../assets/proteinImage.webp";
+import seratImage from "../assets/seratImage.webp";
+import { Link } from "react-router-dom";
 import {
   camelCaseToLowerCase,
   capitalizeEachWord,
 } from "../services/TextConvert";
 
-const MainMenuMaterialPage = () => {
+const MainSpecMaterialPage = () => {
   const dispatch = useDispatch();
   const [dataBaru, setData] = useState([]);
   const { data, generalFoodData, filteredData, loading } = useSelector(
-    (state) => state.menuMaterial
+    (state) => state.foodSpec
   );
 
   useEffect(() => {
@@ -33,18 +36,22 @@ const MainMenuMaterialPage = () => {
       <h1 className="text-3xl font-bold pb-4">Choose Your Menu </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 pt-10">
         {dataBaru.map((item, index) => (
-          <Link to={`/healthy-recipes/${generalFoodData[index]}`} key={index} className="bg-white rounded-lg shadow-md p-4">
+          <Link to={`/food-specs/${generalFoodData[index]}`} key={index} className="bg-white rounded-lg shadow-md p-4">
             <h2 className="text-xl font-bold mb-2">{item}</h2>
             {/* Add more content here as needed */}
             {item && (
               <img
                 src={
-                  item === "Hidangan Utama"
-                    && mainCourse
-                    || item === "Minuman"
-                    && drinkImage
-                    || item === "Snack"
-                    && snacksImage
+                  item === "Tinggi Kalori"
+                    && calsImage
+                    || item === "Tinggi Karbo"
+                    && carbsImage
+                    || item === "Tinggi Lemak"
+                    && fatImage 
+                    || item === "Tinggi Protein"  
+                    && proteinImage 
+                    || item === "Tinggi Serat"
+                    && seratImage
                 }
                 alt="banner"
                 type="image/webp"
@@ -58,4 +65,4 @@ const MainMenuMaterialPage = () => {
   );
 };
 
-export default MainMenuMaterialPage;
+export default MainSpecMaterialPage;

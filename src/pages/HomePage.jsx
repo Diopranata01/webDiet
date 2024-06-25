@@ -33,20 +33,8 @@ const HomePage = () => {
                 Best <b>Diet Program</b>
               </h1>
             </div>
-            {/* {data? (
-                    <div>
-                      {
-                        data.map((item, index) => (
-                        <div key={index} className="col-start-2 hover:row-span-3 border-black border-b-[1px] px-3 text-start flex items-center">
-                          <h1>{item.makanan}</h1>
-                        </div>
-                        ))
-                      }
-                    </div>
-                  ) : ''
-                } */}
             <Link
-              to="/diet-program"
+              to="/calculate-bmi"
               className="col-start-2 hover:row-span-3 border-black border-b-[1px] px-3 text-start flex items-center cursor-pointer"
             >
               <h1>Body Mass Index Calculation</h1>
@@ -59,6 +47,9 @@ const HomePage = () => {
             </Link>
             <Link to="/diet-programs" className="col-start-2 hover:row-span-3 border-black border-b-[1px] px-3 text-start flex items-center">
               <h1>Diet Programs</h1>
+            </Link>
+            <Link to="/food-specs" className="col-start-2 hover:row-span-3 border-black border-b-[1px] px-3 text-start flex items-center">
+              <h1>Food Specification</h1>
             </Link>
           </div>
         </div>

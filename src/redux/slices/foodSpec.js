@@ -4,8 +4,8 @@ import { graph, parse, SPARQLToQuery } from "rdflib";
 import { camelCaseToLowerCase, capitalizeEachWord } from "../../services/TextConvert";
 import { queries } from "../../services/querryRDF";
 
-export const fetchMenuMaterials = createAsyncThunk(
-    "menuMaterial/fetchMenuMaterials",
+export const fetchFoodSpecs = createAsyncThunk(
+    "foodSpec/fetchFoodSpecs",
     async (slug) => {
       const response = await fetch("/makanandiet2aplikasi.rdf");
       const rdfText = await response.text();
@@ -14,12 +14,15 @@ export const fetchMenuMaterials = createAsyncThunk(
       const baseURI = import.meta.env.VITE_APP_BASE_URL;
   
       parse(rdfText, store, baseURI, mimeType);
+
+      console.log(slug);
   
       const query = 
-        slug === "hidanganUtama" ? queries.hidanganUtama : 
-        slug == "minuman" ? queries.minuman : 
-        queries.snacks
-  
+        slug === "tinggiKalori" ? queries.tinggiKalori : 
+        slug === "tinggiKarbo" ? queries.tinggiKarbo : 
+        slug === "tinggiLemak" ? queries.tinggiLemak :
+        slug === "tinggiProtein" ? queries.tinggiProtein : queries.tinggiSerat 
+        
       const sparqlQuery = SPARQLToQuery(query, false, store);
       const results = [];
   
@@ -43,11 +46,11 @@ export const fetchMenuMaterials = createAsyncThunk(
     }
 );
   
-const foodMenuSlice = createSlice({
-    name: "menuMaterial",
+const foodSpec = createSlice({
+    name: "foodSpec",
     initialState: {
       data: [],
-      generalFoodData: ['hidanganUtama', 'minuman', 'snack'],
+      generalFoodData: ['tinggiKalori', 'tinggiKarbo', 'tinggiLemak', 'tinggiProtein', 'tinggiSerat'],
       filteredData: [],
       loading: false,
       error: null,
@@ -59,20 +62,20 @@ const foodMenuSlice = createSlice({
     },
     extraReducers: (builder) => {
       builder
-        .addCase(fetchMenuMaterials.pending, (state) => {
+        .addCase(fetchFoodSpecs.pending, (state) => {
           state.loading = true;
         })
-        .addCase(fetchMenuMaterials.fulfilled, (state, action) => {
+        .addCase(fetchFoodSpecs.fulfilled, (state, action) => {
           state.data = action.payload;
           state.filteredData = action.payload;
           state.loading = false;
         })
-        .addCase(fetchMenuMaterials.rejected, (state, action) => {
+        .addCase(fetchFoodSpecs.rejected, (state, action) => {
           state.loading = false;
           state.error = action.error.message;
         });
     },
 });
 
-export const { setFilteredData } = foodMenuSlice.actions;
-export default foodMenuSlice.reducer;
+export const { setFilteredData } = foodSpec.actions;
+export default foodSpec.reducer;

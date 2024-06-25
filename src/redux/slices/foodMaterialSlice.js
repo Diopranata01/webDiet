@@ -33,9 +33,6 @@ export const fetchFoodMaterials = createAsyncThunk(
           "http://www.semanticweb.org/danny/2024/5/makanan_diet#",
           ""
         );
-        // console.log(newData);
-        newData = camelCaseToLowerCase(newData);
-        newData = capitalizeEachWord(newData);
         results.push({ makanan: newData });
         resolve(results); // Resolve the promise with the results
       });

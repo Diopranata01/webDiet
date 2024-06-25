@@ -4,8 +4,8 @@ import { graph, parse, SPARQLToQuery } from "rdflib";
 import { camelCaseToLowerCase, capitalizeEachWord } from "../../services/TextConvert";
 import { queries } from "../../services/querryRDF";
 
-export const fetchMenuMaterials = createAsyncThunk(
-    "menuMaterial/fetchMenuMaterials",
+export const fetchDietMaterials = createAsyncThunk(
+    "dietMaterial/fetchDietMaterials",
     async (slug) => {
       const response = await fetch("/makanandiet2aplikasi.rdf");
       const rdfText = await response.text();
@@ -14,11 +14,15 @@ export const fetchMenuMaterials = createAsyncThunk(
       const baseURI = import.meta.env.VITE_APP_BASE_URL;
   
       parse(rdfText, store, baseURI, mimeType);
+
+      console.log(slug);
   
       const query = 
-        slug === "hidanganUtama" ? queries.hidanganUtama : 
-        slug == "minuman" ? queries.minuman : 
-        queries.snacks
+        slug === 'dietDash' ? queries.dietDash : 
+        slug === 'dietIntermittentFasting' ? queries.dietIntermitten : 
+        slug === 'dietKatogenik' ? queries.dietKatogenik : 
+        slug === 'dietLowCarb' ? queries.dietLowCarb : 
+        slug === 'dietMediterania' ? queries.dietMediterania : queries.dietVegan 
   
       const sparqlQuery = SPARQLToQuery(query, false, store);
       const results = [];
@@ -43,11 +47,14 @@ export const fetchMenuMaterials = createAsyncThunk(
     }
 );
   
-const foodMenuSlice = createSlice({
-    name: "menuMaterial",
+const dietMenuSlice = createSlice({
+    name: "dietMaterial",
     initialState: {
       data: [],
-      generalFoodData: ['hidanganUtama', 'minuman', 'snack'],
+      generalFoodData: [
+        'dietDash', 'dietIntermittentFasting', 
+        'dietKatogenik', 'dietLowCarb', 'dietMediterania', 
+        'vegan'],
       filteredData: [],
       loading: false,
       error: null,
@@ -59,20 +66,20 @@ const foodMenuSlice = createSlice({
     },
     extraReducers: (builder) => {
       builder
-        .addCase(fetchMenuMaterials.pending, (state) => {
+        .addCase(fetchDietMaterials.pending, (state) => {
           state.loading = true;
         })
-        .addCase(fetchMenuMaterials.fulfilled, (state, action) => {
+        .addCase(fetchDietMaterials.fulfilled, (state, action) => {
           state.data = action.payload;
           state.filteredData = action.payload;
           state.loading = false;
         })
-        .addCase(fetchMenuMaterials.rejected, (state, action) => {
+        .addCase(fetchDietMaterials.rejected, (state, action) => {
           state.loading = false;
           state.error = action.error.message;
         });
     },
 });
 
-export const { setFilteredData } = foodMenuSlice.actions;
-export default foodMenuSlice.reducer;
+export const { setFilteredData } = dietMenuSlice.actions;
+export default dietMenuSlice.reducer;
