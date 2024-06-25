@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import meatSvg from "../assets/svg/meatSvg.svg";
 import fishSvg from "../assets/svg/fishSvg.svg";
-import waterSvg from "../assets/svg/waterSvg.svg";
-import wheatSvg from "../assets/svg/wheatSvg.svg";
-import plantSvg from "../assets/svg/plantSvg.svg";
+import soupSvg from "../assets/svg/soupSvg.svg";
+import fruitSvg from "../assets/svg/fruitSvg.svg";
+import snackSvg from "../assets/svg/snackSvg.svg";
+import meatSvg from "../assets/svg/meatSvg.svg";
 import {
   camelCaseToLowerCase,
   capitalizeEachWord,
 } from "../services/TextConvert";
 
-const FoodListPage = () => {
-  const { filteredData, loading, generalFoodData } = useSelector(
-    (state) => state.foodMaterial
-  );
-
+const FoodSpecList = () => {
+  const { filteredData, loading } = useSelector((state) => state.foodSpec);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const { slug } = useParams();
@@ -52,43 +49,22 @@ const FoodListPage = () => {
           ) : (
             currentItems.map((item, index) => (
               <Link
-                to={`/food-material/${slug}/detail/${item.name}`}
+                to={`/food-specs/${slug}/detail/${item.name}`}
                 key={index}
                 className="flex items-start bg-white rounded-lg shadow-md p-4"
               >
-                {slug === "dariHewan" ? (
-                  <img
-                    src={
-                      item.makanan.includes("Daging") ||
-                      item.makanan.includes("Telur")
-                        ? meatSvg
-                        : fishSvg
-                    }
-                    alt="svg"
-                    width="45"
-                    height="45"
-                    className="bg-old-gold rounded-[10px] mr-4 p-2"
-                  />
-                ) : (
-                  slug === "pokok" && (
-                    <img
-                      src={item.makanan.includes("Air") ? waterSvg : wheatSvg}
-                      alt="svg"
-                      width="45"
-                      height="45"
-                      className="bg-old-gold rounded-[10px] mr-4 p-2"
-                    />
-                  )
-                )}
-                {slug === "dariTumbuhan" && (
-                  <img
-                    src={plantSvg}
-                    alt="svg"
-                    width="45"
-                    height="45"
-                    className="bg-old-gold rounded-[10px] mr-4 p-2"
-                  />
-                )}
+                <img
+                src={item.makanan.includes("Buah") ? fruitSvg : 
+                    item.makanan.includes("Ayam") && !item.makanan.includes("Soto") ? meatSvg : 
+                    item.makanan.includes("Ikan") ? fishSvg : 
+                    item.makanan.includes("Sayur") || item.makanan.includes("Soto") || item.makanan.includes("Gulai") ? soupSvg : 
+                    snackSvg 
+                  }
+                alt="svg"
+                width="45"
+                height="45"
+                className="bg-old-gold rounded-[10px] mr-4 p-2"
+              />
                 <div className="flex flex-col items-start text-left">
                   <h2 className="text-lg font-bold">{item.makanan}</h2>
                   <p className="text-gray-600">
@@ -126,4 +102,4 @@ const FoodListPage = () => {
   );
 };
 
-export default FoodListPage;
+export default FoodSpecList;

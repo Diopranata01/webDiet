@@ -10,10 +10,6 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
 
-  // const handleFoodMaterialClick = () => {
-  //   history.push("/food-material"); // Redirect to FoodMaterialPage
-  // };
-
   return (
     <>
       {/* Banner */}
@@ -37,32 +33,23 @@ const HomePage = () => {
                 Best <b>Diet Program</b>
               </h1>
             </div>
-            {/* {data? (
-                    <div>
-                      {
-                        data.map((item, index) => (
-                        <div key={index} className="col-start-2 hover:row-span-3 border-black border-b-[1px] px-3 text-start flex items-center">
-                          <h1>{item.makanan}</h1>
-                        </div>
-                        ))
-                      }
-                    </div>
-                  ) : ''
-                } */}
             <Link
-              to="/diet-program"
+              to="/calculate-bmi"
               className="col-start-2 hover:row-span-3 border-black border-b-[1px] px-3 text-start flex items-center cursor-pointer"
             >
               <h1>Body Mass Index Calculation</h1>
             </Link>
             <Link to="/healthy-recipes" className="col-start-2 hover:row-span-3 border-black border-b-[1px] px-3 text-start flex items-center">
-              <h1>Healty Recipes</h1>
+              <h1>Healty Recipes Menu</h1>
             </Link>
             <Link to="/food-material" className="col-start-2 hover:row-span-3 border-black border-b-[1px] px-3 text-start flex items-center">
               <h1>Food Material</h1>
             </Link>
             <Link to="/diet-programs" className="col-start-2 hover:row-span-3 border-black border-b-[1px] px-3 text-start flex items-center">
               <h1>Diet Programs</h1>
+            </Link>
+            <Link to="/food-specs" className="col-start-2 hover:row-span-3 border-black border-b-[1px] px-3 text-start flex items-center">
+              <h1>Food Specification</h1>
             </Link>
           </div>
         </div>

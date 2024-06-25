@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import meatSvg from "../assets/svg/meatSvg.svg";
 import fishSvg from "../assets/svg/fishSvg.svg";
-import waterSvg from "../assets/svg/waterSvg.svg";
-import wheatSvg from "../assets/svg/wheatSvg.svg";
-import plantSvg from "../assets/svg/plantSvg.svg";
+import mainCourseSvg from "../assets/svg/mainCourseSvg.svg";
+import soupSvg from "../assets/svg/soupSvg.svg";
+import juiceSvg from "../assets/svg/juiceSvg.svg";
+import teaSvg from "../assets/svg/teaSvg.svg";
+import milkSvg from "../assets/svg/milkSvg.svg";
+import fruitSvg from "../assets/svg/fruitSvg.svg";
+import snackSvg from "../assets/svg/snackSvg.svg";
 import {
   camelCaseToLowerCase,
   capitalizeEachWord,
 } from "../services/TextConvert";
 
-const FoodListPage = () => {
-  const { filteredData, loading, generalFoodData } = useSelector(
-    (state) => state.foodMaterial
-  );
-
+const MenuListPage = () => {
+  const { filteredData, loading } = useSelector((state) => state.menuMaterial);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const { slug } = useParams();
-  
+
   const upperCaseData = filteredData.map((item) => {
     const lowerCaseStr = camelCaseToLowerCase(item.makanan);
     const capitalizedStr = capitalizeEachWord(lowerCaseStr);
@@ -52,27 +52,28 @@ const FoodListPage = () => {
           ) : (
             currentItems.map((item, index) => (
               <Link
-                to={`/food-material/${slug}/detail/${item.name}`}
+                to={`/healthy-recipes/${slug}/detail/${item.name}`}
                 key={index}
                 className="flex items-start bg-white rounded-lg shadow-md p-4"
               >
-                {slug === "dariHewan" ? (
+                {slug === "hidanganUtama" ? (
                   <img
                     src={
-                      item.makanan.includes("Daging") ||
-                      item.makanan.includes("Telur")
-                        ? meatSvg
-                        : fishSvg
+                      item.makanan.includes("Ikan") ? fishSvg : 
+                      item.makanan.includes("Sayur") && !item.makanan.includes("Nasi") ? soupSvg : mainCourseSvg
                     }
                     alt="svg"
                     width="45"
                     height="45"
                     className="bg-old-gold rounded-[10px] mr-4 p-2"
                   />
-                ) : (
-                  slug === "pokok" && (
+                ) : slug === 'minuman' && (
+                  (
                     <img
-                      src={item.makanan.includes("Air") ? waterSvg : wheatSvg}
+                      src={
+                        item.makanan.includes("Jus") || item.makanan.includes("Buah") ? juiceSvg 
+                        : item.makanan.includes("Susu") ? milkSvg : teaSvg 
+                      }
                       alt="svg"
                       width="45"
                       height="45"
@@ -80,14 +81,14 @@ const FoodListPage = () => {
                     />
                   )
                 )}
-                {slug === "dariTumbuhan" && (
+                {slug === "snack" && (
                   <img
-                    src={plantSvg}
-                    alt="svg"
-                    width="45"
-                    height="45"
-                    className="bg-old-gold rounded-[10px] mr-4 p-2"
-                  />
+                  src={item.makanan.includes("Buah") ? fruitSvg : item.makanan.includes("Bubur") ? soupSvg : snackSvg}
+                  alt="svg"
+                  width="45"
+                  height="45"
+                  className="bg-old-gold rounded-[10px] mr-4 p-2"
+                />
                 )}
                 <div className="flex flex-col items-start text-left">
                   <h2 className="text-lg font-bold">{item.makanan}</h2>
@@ -126,4 +127,4 @@ const FoodListPage = () => {
   );
 };
 
-export default FoodListPage;
+export default MenuListPage;
