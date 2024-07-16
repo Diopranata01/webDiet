@@ -20,7 +20,6 @@ const MainDietMaterialPage = () => {
   );
 
   useEffect(() => {
-    console.log(generalFoodData);
     const dataCamelCase = generalFoodData.map((item) => {
       return camelCaseToLowerCase(item);
     });

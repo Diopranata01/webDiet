@@ -50,7 +50,6 @@ const MenuDetailPage = () => {
       axios
         .post(`${base_url}?query=${encodedQuery}`)
         .then((res) => {
-            console.log(res.data.results.bindings);
           const result = res.data.results.bindings;
           const data = result.map((item) => {
             const baruData = item.food.value.split("#").pop();

@@ -38,7 +38,6 @@ export const fetchMenuMaterials = createAsyncThunk(
   
       // Await the query promise to get the results
       const fetchedResults = await queryPromise;
-      // console.log(fetchedResults); // Log the results
       return fetchedResults; // Return the results to the reducer
     }
 );

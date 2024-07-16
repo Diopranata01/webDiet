@@ -17,7 +17,6 @@ const DietMaterialPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    console.log(slug);
     if (slug !== undefined){
       dispatch(fetchDietMaterials(slug));
     }
@@ -96,7 +95,6 @@ const DietMaterialPage = () => {
             text === 'fat' ? highFat : 
             text === 'calories' ? highCalories : highCarbs 
           );
-          // console.log(resultlSaw);
           dispatch(setFilteredData(resultlSaw));
         })
         .catch((err) => {

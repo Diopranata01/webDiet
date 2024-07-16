@@ -94,7 +94,6 @@ const MenuMaterialPage = () => {
             text === 'fat' ? highFat : 
             text === 'calories' ? highCalories : highCarbs 
           );
-          // console.log(resultlSaw);
           dispatch(setFilteredData(resultlSaw));
         })
         .catch((err) => {

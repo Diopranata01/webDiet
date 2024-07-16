@@ -1,5 +1,4 @@
 const camelCaseToLowerCase = (str) => {
-    // console.log(str);
     return str.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
 };
 
