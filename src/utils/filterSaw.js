@@ -24,7 +24,6 @@ export const highCarbs = {
   }
 
 export const calculateSAW = (foods, weights) => {
-    // console.log(weights);
     const parseIntData = foods.map((food) => {
       const caloriesValue = food.calories ? food.calories.value : "0";
       const proteinValue = food.protein ? food.protein.value : "0";
@@ -55,20 +54,11 @@ export const calculateSAW = (foods, weights) => {
       };
     });
 
-    // // Calculate the weighted sum for each food
-    let scoredFoods = normalizedFoods.map((food) => {
-      return {
-        ...food,
-        score:
-          food.calories * weights.calories +
-          food.protein * weights.protein +
-          food.carbs * weights.carbs +
-          food.fat * weights.fat,
-      };
-    });
+    // Determine the dominant nutrient based on the weights
+    const dominantNutrient = Object.keys(weights).reduce((a, b) => (weights[a] > weights[b] ? a : b));
+  
+    // Sort foods based on the dominant nutrient
+    const sortedFoods = parseIntData.sort((a, b) => b[dominantNutrient] - a[dominantNutrient]);
 
-    // // Sort the foods based on their scores
-    scoredFoods.sort((a, b) => b.score - a.score);
-
-    return scoredFoods;
+    return sortedFoods;
   };
